@@ -21,13 +21,16 @@ app.config.suppress_callback_exceptions = True
 
 #
 def load_data():
-    #cargar archivo csv 
-    df = pd.read_csv('datos_energia.csv')
-    #convertir columna de fecha a  datetime
-    df.iloc[:, 0] = pd.to_datetime(df.iloc[:, 0])
-    #establecer la columna datetime como índice del DataFrame
-    df.set_index(df.columns[0], inplace=True)
-    return df
+    try: #cargar archivo csv 
+        df = pd.read_csv('datos_energia.csv')
+        #convertir columna de fecha a  datetime
+        df.iloc[:, 0] = pd.to_datetime(df.iloc[:, 0])
+        #establecer la columna datetime como índice del DataFrame
+        df.set_index(df.columns[0], inplace=True)
+        return df
+    except FileNotFoundError:
+        print("No se encontró el archivo 'datos_energia.csv'.")
+        return pd.DataFrame()
     
     
 
